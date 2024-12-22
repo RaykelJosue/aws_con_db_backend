@@ -5,7 +5,15 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from psycopg2 import connect
 
 app = Flask(__name__)
-CORS(app)
+
+# Configuración de CORS más específica
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["https://aws-con-db.vercel.app", "http://localhost:3000"],
+        "methods": ["GET", "POST", "PUT", "DELETE"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # Configuración de la base de datos RDS
 DB_USER = 'postgres'
@@ -65,6 +73,20 @@ def obtener_usuarios():
         return jsonify(usuarios_list)
     finally:
         session.close()
+
+# Manejador de errores
+@app.errorhandler(500)
+def handle_500_error(error):
+    return jsonify({"error": "Error interno del servidor"}), 500
+
+@app.errorhandler(404)
+def handle_404_error(error):
+    return jsonify({"error": "Recurso no encontrado"}), 404
+
+# Añadiendo un endpoint de prueba
+@app.route('/api/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy"}), 200
 
 
 # Ruta para obtener un usuario en específico por ID
