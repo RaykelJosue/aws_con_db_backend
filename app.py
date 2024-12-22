@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import scoped_session, sessionmaker
+from psycopg2 import connect
 
 app = Flask(__name__)
 CORS(app)
@@ -9,7 +10,7 @@ CORS(app)
 # Configuración de la base de datos RDS
 DB_USER = 'postgres'
 DB_PASSWORD = 'postgres'
-DB_HOST = 'crud.c140ceomcm3x.us-east-2.rds.amazonaws.com'  # Endpoint de AWS
+DB_HOST = 'crud.cl6ua8ekyhbb.us-east-1.rds.amazonaws.com'  # Endpoint de AWS
 DB_NAME = 'crud'
 
 # Configuración de SQLAlchemy para RDS
