@@ -11,7 +11,7 @@ CORS(app, resources={
     r"/api/*": {
         "origins": ["https://aws-con-db.vercel.app", "http://localhost:3000"],
         "methods": ["GET", "POST", "PUT", "DELETE"],
-        "allow_headers": ["Content-Type"]
+        "allow_headers": ["Content-Type", "ngrok-skip-browser-warning"]
     }
 })
 
